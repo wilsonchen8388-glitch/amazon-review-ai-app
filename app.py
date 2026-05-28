@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 from transformers import pipeline
 
@@ -48,3 +49,31 @@ if st.button("Analyze Review"):
     st.subheader("Top Issue Scores")
     for label, score in zip(issue_result["labels"], issue_result["scores"]):
         st.write(label, ":", round(score * 100, 2), "%")
+        # -------------------------------
+# CSV DATA ANALYSIS
+# -------------------------------
+
+st.header("Dataset Analysis Dashboard")
+
+df = pd.read_csv("amazon_review_analysis_results.csv")
+
+st.subheader("Dataset Preview")
+st.dataframe(df.head())
+
+# Sentiment distribution
+if "sentiment" in df.columns:
+
+    st.subheader("Sentiment Distribution")
+
+    sentiment_counts = df["sentiment"].value_counts()
+
+    st.bar_chart(sentiment_counts)
+
+# Issue distribution
+if "main_issue" in df.columns:
+
+    st.subheader("Top Customer Issues")
+
+    issue_counts = df["main_issue"].value_counts()
+
+    st.bar_chart(issue_counts)
