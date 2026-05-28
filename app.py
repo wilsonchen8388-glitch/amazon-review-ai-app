@@ -40,7 +40,7 @@ if st.button("Analyze Review"):
     )
 
     st.subheader("Sentiment Analysis Result")
-    if sentiment_result["label"] == "LABEL_1":
+if sentiment_result["label"] == "LABEL_1":
     final_sentiment = "Positive"
 else:
     final_sentiment = "Negative"
