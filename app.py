@@ -40,21 +40,46 @@ if st.button("Analyze Review"):
     )
 
     st.subheader("Sentiment Analysis Result")
-if sentiment_result["label"] == "LABEL_1":
-    final_sentiment = "Positive"
-else:
-    final_sentiment = "Negative"
 
-st.write("Label:", final_sentiment)
-    st.write("Confidence:", round(sentiment_result["score"] * 100, 2), "%")
+    if sentiment_result["label"] == "LABEL_1":
+        final_sentiment = "Positive"
+    else:
+        final_sentiment = "Negative"
+
+    st.write("Label:", final_sentiment)
+
+    st.write(
+        "Confidence:",
+        round(sentiment_result["score"] * 100, 2),
+        "%"
+    )
 
     st.subheader("Issue Classification Result")
-    st.write("Main Issue:", issue_result["labels"][0])
-    st.write("Confidence:", round(issue_result["scores"][0] * 100, 2), "%")
+
+    st.write(
+        "Main Issue:",
+        issue_result["labels"][0]
+    )
+
+    st.write(
+        "Confidence:",
+        round(issue_result["scores"][0] * 100, 2),
+        "%"
+    )
 
     st.subheader("Top Issue Scores")
-    for label, score in zip(issue_result["labels"], issue_result["scores"]):
-        st.write(label, ":", round(score * 100, 2), "%")
+
+    for label, score in zip(
+        issue_result["labels"],
+        issue_result["scores"]
+    ):
+
+        st.write(
+            label,
+            ":",
+            round(score * 100, 2),
+            "%"
+        )
         # -------------------------------
 # CSV DATA ANALYSIS
 # -------------------------------
