@@ -61,19 +61,19 @@ st.subheader("Dataset Preview")
 st.dataframe(df.head())
 
 # Sentiment distribution
-if "sentiment" in df.columns:
+if "Sentiment" in df.columns:
 
     st.subheader("Sentiment Distribution")
 
-    sentiment_counts = df["sentiment"].value_counts()
+    sentiment_counts = df["Sentiment"].value_counts()
 
     st.bar_chart(sentiment_counts)
 
 # Issue distribution
-if "main_issue" in df.columns:
+if "Main_issue" in df.columns:
 
     st.subheader("Top Customer Issues")
 
-    issue_counts = df["main_issue"].value_counts()
+    issue_counts = df["Main_issue"].value_counts()
 
     st.bar_chart(issue_counts)
