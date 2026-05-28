@@ -40,7 +40,12 @@ if st.button("Analyze Review"):
     )
 
     st.subheader("Sentiment Analysis Result")
-    st.write("Label:", sentiment_result["label"])
+    if sentiment_result["label"] == "LABEL_1":
+    final_sentiment = "Positive"
+else:
+    final_sentiment = "Negative"
+
+st.write("Label:", final_sentiment)
     st.write("Confidence:", round(sentiment_result["score"] * 100, 2), "%")
 
     st.subheader("Issue Classification Result")
