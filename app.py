@@ -1,26 +1,15 @@
 import streamlit as st
 from transformers import pipeline
-from transformers import AutoTokenizer
-from transformers import AutoModelForSequenceClassification
 
 st.title("Amazon Review AI Analyzer")
 
-st.write("This app analyzes Amazon product reviews using Hugging Face pipelines.")
-
-# Load fine-tuned sentiment model
-model_path = "./fine_tuned_distilbert_amazon"
-
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-
-model = AutoModelForSequenceClassification.from_pretrained(model_path)
+st.write("This app analyzes customer reviews using two Hugging Face pipelines.")
 
 sentiment_classifier = pipeline(
     "text-classification",
-    model=model,
-    tokenizer=tokenizer
+    model="fabriceyhc/bert-base-uncased-amazon_polarity"
 )
 
-# Zero-shot classification pipeline
 issue_classifier = pipeline(
     "zero-shot-classification",
     model="facebook/bart-large-mnli"
@@ -35,10 +24,12 @@ candidate_labels = [
     "Pricing Issue"
 ]
 
-review = st.text_area("Enter Amazon Review")
+review = st.text_area(
+    "Enter an Amazon product review:",
+    "The laptop is fast, but the battery drains quickly and customer support was terrible."
+)
 
 if st.button("Analyze Review"):
-
     sentiment_result = sentiment_classifier(review)[0]
 
     issue_result = issue_classifier(
@@ -46,35 +37,14 @@ if st.button("Analyze Review"):
         candidate_labels
     )
 
-    sentiment_label = sentiment_result["label"]
+    st.subheader("Sentiment Analysis Result")
+    st.write("Label:", sentiment_result["label"])
+    st.write("Confidence:", round(sentiment_result["score"] * 100, 2), "%")
 
-    if sentiment_label == "LABEL_1":
-        final_sentiment = "Positive"
-    else:
-        final_sentiment = "Negative"
+    st.subheader("Issue Classification Result")
+    st.write("Main Issue:", issue_result["labels"][0])
+    st.write("Confidence:", round(issue_result["scores"][0] * 100, 2), "%")
 
-    sentiment_score = round(
-        sentiment_result["score"] * 100,
-        2
-    )
-
-    main_issue = issue_result["labels"][0]
-
-    issue_score = round(
-        issue_result["scores"][0] * 100,
-        2
-    )
-
-    st.subheader("Analysis Result")
-
-    st.write("Sentiment:")
-    st.success(final_sentiment)
-
-    st.write("Confidence:")
-    st.write(f"{sentiment_score}%")
-
-    st.write("Main Issue:")
-    st.warning(main_issue)
-
-    st.write("Issue Confidence:")
-    st.write(f"{issue_score}%")
+    st.subheader("Top Issue Scores")
+    for label, score in zip(issue_result["labels"], issue_result["scores"]):
+        st.write(label, ":", round(score * 100, 2), "%")
