@@ -56,7 +56,7 @@ if st.button("Analyze Review"):
 st.header("Dataset Analysis Dashboard")
 
 df = pd.read_csv("amazon_review_analysis_results.csv")
-st.write(df.columns)
+
 st.subheader("Dataset Preview")
 st.dataframe(df.head())
 
@@ -70,10 +70,10 @@ if "Sentiment" in df.columns:
     st.bar_chart(sentiment_counts)
 
 # Issue distribution
-if "Main_issue" in df.columns:
+if "Main Issue" in df.columns:
 
     st.subheader("Top Customer Issues")
 
-    issue_counts = df["Main_issue"].value_counts()
+    issue_counts = df["Main Issue"].value_counts()
 
     st.bar_chart(issue_counts)
