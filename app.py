@@ -56,7 +56,7 @@ if st.button("Analyze Review"):
 st.header("Dataset Analysis Dashboard")
 
 df = pd.read_csv("amazon_review_analysis_results.csv")
-
+st.write(df.columns)
 st.subheader("Dataset Preview")
 st.dataframe(df.head())
 
