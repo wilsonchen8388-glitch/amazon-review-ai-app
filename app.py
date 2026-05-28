@@ -6,9 +6,10 @@ st.title("Amazon Review AI Analyzer")
 
 st.write("This app analyzes customer reviews using two Hugging Face pipelines.")
 
+
 sentiment_classifier = pipeline(
     "text-classification",
-    model="fabriceyhc/bert-base-uncased-amazon_polarity"
+    model="UST21214733/fine-tuned-distilbert-amazon-review"
 )
 
 issue_classifier = pipeline(
