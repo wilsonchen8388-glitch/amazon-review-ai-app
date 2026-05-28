@@ -12,7 +12,7 @@ sentiment_classifier = pipeline(
 
 issue_classifier = pipeline(
     "zero-shot-classification",
-    model="facebook/bart-large-mnli"
+    model="valhalla/distilbart-mnli-12-1"
 )
 
 candidate_labels = [
