@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import plotly.express as px
 from transformers import pipeline
 
 st.title("Amazon Review AI Analyzer")
@@ -96,15 +97,45 @@ if "Sentiment" in df.columns:
 
     st.subheader("Sentiment Distribution")
 
-    sentiment_counts = df["Sentiment"].value_counts()
+    sentiment_counts = df["Sentiment"].value_counts().reset_index()
+    sentiment_counts.columns = ["Sentiment", "Count"]
 
-    st.bar_chart(sentiment_counts)
+    fig_sentiment = px.bar(
+        sentiment_counts,
+        x="Sentiment",
+        y="Count",
+        text="Count",
+        title="Sentiment Distribution"
+    )
+
+    fig_sentiment.update_layout(
+        xaxis_title="Sentiment",
+        yaxis_title="Count",
+        xaxis_tickangle=0
+    )
+
+    st.plotly_chart(fig_sentiment, use_container_width=True)
 
 # Issue distribution
 if "Main Issue" in df.columns:
 
     st.subheader("Top Customer Issues")
 
-    issue_counts = df["Main Issue"].value_counts()
+    issue_counts = df["Main Issue"].value_counts().reset_index()
+    issue_counts.columns = ["Main Issue", "Count"]
 
-    st.bar_chart(issue_counts)
+    fig_issue = px.bar(
+        issue_counts,
+        x="Main Issue",
+        y="Count",
+        text="Count",
+        title="Top Customer Issues"
+    )
+
+    fig_issue.update_layout(
+        xaxis_title="Customer Issue",
+        yaxis_title="Count",
+        xaxis_tickangle=0
+    )
+
+    st.plotly_chart(fig_issue, use_container_width=True)
