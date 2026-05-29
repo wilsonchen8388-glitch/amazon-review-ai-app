@@ -5,3 +5,4 @@ pandas
 sentencepiece
 accelerate
 safetensors
+plotly
